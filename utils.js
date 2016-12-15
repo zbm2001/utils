@@ -1,5 +1,5 @@
 /*
- * @name: utils
+ * @name: z-utils
  * @version: 1.0.0
  * @description: javascript Date Object extend
  * @author: zbm2001@aliyun.com
@@ -107,7 +107,7 @@ function S4() {
 }
 
 /**
- * 全局唯一标识符
+ * 生成一个全局唯一标识符
  * @return {String} length{36} 返回格式为：“xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx” 的字符串
  */
 function uuid() {

@@ -26,7 +26,7 @@ const banner = '/*\n' +
 
 const format = rollupConfig.format || 'amd';
 const srcEntry = { amd: 'core', cjs: 'core', es: 'core', iife: 'core', umd: 'core' }[format];
-const moduleName = rollupConfig.moduleName || package.name;
+const moduleName = rollupConfig.moduleName;
 
 rollup.rollup({
   entry: 'src/' + srcEntry + '.js',

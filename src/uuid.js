@@ -14,7 +14,7 @@ function S4() {
 }
 
 /**
- * 全局唯一标识符
+ * 生成一个全局唯一标识符
  * @return {String} length{36} 返回格式为：“xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx” 的字符串
  */
 export default function uuid() {

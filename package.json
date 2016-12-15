@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "z-utils",
   "version": "1.0.0",
   "description": "javascript Date Object extend",
   "main": "utils.js",
