@@ -1,7 +1,6 @@
 // 项目下直接运行命令 rollup -c
-// import buble from 'rollup-plugin-buble';
 var buble = require('rollup-plugin-buble');
-const pkg = require('./package.json');
+var pkg = require('./package.json');
 const banner = '/*\n' +
 'name,version,description,author,license'.split(',')
 .map((k) => ` * @${k}: ${pkg[k]}`).join('\n') +
