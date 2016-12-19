@@ -1,6 +1,6 @@
 /*
  * @name: z-utils
- * @version: 1.0.1
+ * @version: 1.0.2
  * @description: javascript Date Object extend
  * @author: zbm2001@aliyun.com
  * @license: Apache 2.0
