@@ -1,15 +1,15 @@
 /*
  * @name: z-utils
- * @version: 1.0.0
+ * @version: 1.0.1
  * @description: javascript Date Object extend
  * @author: zbm2001@aliyun.com
  * @license: Apache 2.0
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.utils = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory((global.utils = global.utils || {})));
+}(this, (function (exports) { 'use strict';
 
 var toString = Object.prototype.toString;
 /**
@@ -114,14 +114,12 @@ function uuid() {
   return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
 
-var core = {
-  assign: assign,
-  create: create,
-  isNativeFunction: isNativeFunction,
-  typeOf: typeOf,
-  uuid: uuid
-};
+exports.assign = assign;
+exports.create = create;
+exports.isNativeFunction = isNativeFunction;
+exports.typeOf = typeOf;
+exports.uuid = uuid;
 
-return core;
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

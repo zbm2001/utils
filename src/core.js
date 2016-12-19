@@ -4,7 +4,7 @@ import isNativeFunction from './isNativeFunction';
 import typeOf from './typeOf';
 import uuid from './uuid';
 
-export default {
+export {
   assign,
   create,
   isNativeFunction,

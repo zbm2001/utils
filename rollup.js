@@ -3,10 +3,27 @@
 const fs = require('fs');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
-const uglify = require('rollup-plugin-uglify');
 const uglifyjs = require('uglify-js');
-const package = require('./package.json');
-const rollupConfig = package.rollupConfig || {};
+const uglify = require('rollup-plugin-uglify');
+const pkg = require('./package.json');
+const rollupConfig = require('./rollup.config.js');
+const rc = {
+  entry: rollupConfig.entry,
+  plugins: rollupConfig.plugins
+};
+
+var targets = rollupConfig.targets.map(function(target){
+  return {
+    format: target.format,
+    dest: target.dest
+  }
+}) || [{ format: rollupConfig.format, dest: rollupConfig.dest }];
+
+targets.forEach(function(target){
+  target.banner = this.banner;
+  target.moduleName = this.moduleName;
+  target.sourceMap = this.sourceMap;
+}, rollupConfig);
 
 /**
  * JS压缩最小化
@@ -19,53 +36,25 @@ function minify(code){
   return result.code;
 }
 
-const banner = '/*\n' +
-'name,version,description,author,license'.split(',')
-.map((k) => ` * @${k}: ${package[k]}`).join('\n') +
-'\n */';
+rollup.rollup(rc).then(bundle => {
+  
+  targets.forEach(function(target){
+    var result = bundle.generate(target);
+    // dest 生成的目标文件
+    fs.writeFileSync( target.dest, result.code );
 
-const format = rollupConfig.format || 'amd';
-const srcEntry = { amd: 'core', cjs: 'core', es: 'core', iife: 'core', umd: 'core' }[format];
-const moduleName = rollupConfig.moduleName;
-
-rollup.rollup({
-  entry: 'src/' + srcEntry + '.js',
-  plugins: [
-    // 结合 buble 比 babel 更快
-    buble({
-      exclude: 'node_modules/**'
-    })
-    // 其他插件，如压缩代码等
-    // ,uglify()
-  ]
-}).then(bundle => {
-
-  var result = bundle.generate({
-    // output format - 'amd', 'cjs', 'es', 'iife', 'umd'
-    format: format,
-    moduleName: moduleName, // umd 或 iife 模式下，若入口文件含 export，必须加上该属性
-    sourceMap: false
-  });
-
-  // dest 生成的目标文件
-  fs.writeFileSync( package.main, banner + '\n' + result.code );
   // 若指定压缩最小化文件
-  if(rollupConfig.minimize){
-    let minMain = package.main.replace(/(?=\.js$)/, '.min');
-    minMain === package.main && (minMain += '.min');
-    fs.writeFileSync( minMain, banner + '\n' + minify(result.code) );
-  }
+  // if(target.minimize){
+  //   let minMain = target.dest.replace(/(?=\.js$)/, '.min');
+  //   minMain === target.dest && (minMain += '.min');
+  //   fs.writeFileSync( minMain, target.banner + '\n' + minify(result.code) );
+  // }
+
+  }, bundle);
   
-  
-  // // bundle写入方式
-  // bundle.write({
-  //   // output format - 'amd', 'cjs', 'es6', 'iife', 'umd'
-  //   format: 'iife',
-  //   moduleName: 'Date', // umd 或 iife 模式下，若入口文件含 export，必须加上该属性
-  //   dest: moduleName + '.js',
-  //   banner: banner,
-  //   sourceMap: false
-  // });
+
+  // bundle写入方式
+  // targets.forEach(bundle.write, bundle);
 
 }).catch(e => {
   process.stderr.write(e.message + '\n');
