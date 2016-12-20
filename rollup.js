@@ -12,12 +12,10 @@ const rc = {
   plugins: rollupConfig.plugins
 };
 
-var targets = rollupConfig.targets ? rollupConfig.targets.map(function(target) {
-  return {
-    format: target.format,
-    dest: target.dest
-  }
-}) : [{
+var targets = rollupConfig.targets ? rollupConfig.targets.map(target => ({
+  format: target.format,
+  dest: target.dest
+})) : [{
   format: rollupConfig.format,
   dest: rollupConfig.dest
 }];

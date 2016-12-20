@@ -1,15 +1,13 @@
 /*
  * @name: z-utils
- * @version: 1.0.6
+ * @version: 1.0.7
  * @description: javascript uitls
  * @author: zbm2001@aliyun.com
  * @license: Apache 2.0
  */
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.utils = global.utils || {})));
-}(this, (function (exports) { 'use strict';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 var toString = Object.prototype.toString;
 /**
@@ -119,7 +117,3 @@ exports.create = create;
 exports.isNativeFunction = isNativeFunction;
 exports.typeOf = typeOf;
 exports.uuid = uuid;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
