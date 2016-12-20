@@ -19,11 +19,11 @@ module.exports = {
   targets: [ // 多文件生成有BUG ！！var a,b; => var a; var b; var var a; var var b; ......
     {
       dest: 'utils.js',
+      format: 'cjs'
+    }/*, {
+      dest: 'utils.umd.js',
       format: 'umd'
     }, {
-      dest: 'utils.es.js',
-      format: 'es'
-    }/*, {
       dest: 'utils.amd.js',
       format: 'amd'
     }, {
