@@ -1,5 +1,17 @@
 # utils
 
+## 组件构建
+
+// 从配置文件构建（rollup.config.js）
+npm run build // rollup -c
+
+或者：
+
+// 自定义构建
+npm run build:js // node rollup
+
+## 组件接口
+
 ### typeOf(object)
 返回参数的类型名称
 
