@@ -1,6 +1,6 @@
 {
   "name": "z-utils",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "javascript uitls",
   "main": "utils.js",
   "scripts": {

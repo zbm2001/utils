@@ -21,20 +21,20 @@ module.exports = {
       dest: 'utils.js',
       format: 'cjs'
     }/*, {
-      dest: 'utils.umd.js',
-      format: 'umd'
-    }, {
       dest: 'utils.amd.js',
       format: 'amd'
     }, {
       dest: 'utils.cjs.js',
       format: 'cjs'
+    }*/, {
+      dest: 'utils.es.js',
+      format: 'es'
+    }/*, {
+      dest: 'utils.iife.js',
+      format: 'iife'
     }, {
       dest: 'utils.umd.js',
       format: 'umd'
-    }, {
-      dest: 'utils.iife.js',
-      format: 'iife'
     }*/
   ],
   banner: banner,
