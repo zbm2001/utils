@@ -1,14 +1,7 @@
 # utils
 
-## 组件构建
-
-// 从配置文件构建（rollup.config.js）
-npm run build // rollup -c
-
-或者：
-
-// 自定义构建
-npm run build:js // node rollup
+## 安装
+npm i z-utils
 
 ## 组件接口
 
@@ -41,3 +34,13 @@ utils.isNativeFunction([].push) => true
 
 #### 示例
 utils.uuid() => "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+## 组件构建
+
+### 从配置文件构建（rollup.config.js）
+npm run build // rollup -c
+
+或者：
+
+### 自定义构建
+npm run build:js // node rollup
