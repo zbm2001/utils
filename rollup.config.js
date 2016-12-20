@@ -1,11 +1,11 @@
 // 项目下直接运行命令 rollup -c
-var buble = require('rollup-plugin-buble');
-var pkg = require('./package.json');
+const buble = require('rollup-plugin-buble');
+const pkg = require('./package.json');
 const banner = '/*\n' +
 'name,version,description,author,license'.split(',')
 .map((k) => ` * @${k}: ${pkg[k]}`).join('\n') +
 '\n */';
-var external = Object.keys(pkg.devDependencies);
+const external = Object.keys(pkg.devDependencies);
 
 module.exports = {
   entry: 'src/core.js',
