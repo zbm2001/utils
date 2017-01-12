@@ -18,7 +18,7 @@ module.exports = {
   external: external,
   targets: [ // 多文件生成有BUG ！！var a,b; => var a; var b; var var a; var var b; ......
     {
-      dest: 'utils.js',
+      dest: 'index.js',
       format: 'cjs'
     }/*, {
       dest: 'utils.amd.js',

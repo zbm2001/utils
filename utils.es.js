@@ -1,6 +1,6 @@
 /*
  * @name: z-utils
- * @version: 1.0.7
+ * @version: 1.0.8
  * @description: javascript uitls
  * @author: zbm2001@aliyun.com
  * @license: Apache 2.0

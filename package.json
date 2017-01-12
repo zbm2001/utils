@@ -1,8 +1,7 @@
 {
   "name": "z-utils",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "javascript uitls",
-  "main": "utils.js",
   "scripts": {
     "build": "rollup -c",
     "build:js": "node rollup",
@@ -24,7 +23,7 @@
   },
   "homepage": "https://github.com/zbm2001/utils#readme",
   "devDependencies": {
-    "rollup": "^0.37.0",
+    "rollup": "^0.37.2",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-uglify": "^1.0.1",
     "uglify-js": "^2.7.5"
