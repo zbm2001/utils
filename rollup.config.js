@@ -8,7 +8,7 @@ const banner = '/*\n' +
 const external = Object.keys(pkg.devDependencies);
 
 module.exports = {
-  entry: 'src/core.js',
+  entry: 'src/index.js',
   plugins: [
     // 结合 buble 比 babel 更快
     buble({
