@@ -1,6 +1,4 @@
 node_modules/
-src/
-test/
 .project
 .idea
 rollup.config.js
