@@ -1,11 +1,13 @@
 /*
  * @name: z-utils
- * @version: 1.1.1
+ * @version: 1.1.2
  * @description: javascript uitls
  * @author: zbm2001@aliyun.com
  * @license: Apache 2.0
  */
 'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 var toString = Object.prototype.toString;
 
@@ -133,12 +135,8 @@ function uuid() {
   return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4())
 }
 
-var index = {
-  assign: assign,
-  create: create,
-  isNativeFunction: isNativeFunction,
-  typeOf: typeOf,
-  uuid: uuid
-};
-
-module.exports = index;
+exports.assign = assign;
+exports.create = create;
+exports.isNativeFunction = isNativeFunction;
+exports.typeOf = typeOf;
+exports.uuid = uuid;

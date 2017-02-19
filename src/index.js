@@ -1,13 +1,5 @@
-import assign from './assign'
-import create from './create'
-import isNativeFunction from './isNativeFunction'
-import typeOf from './typeOf'
-import uuid from './uuid'
-
-export default {
-  assign,
-  create,
-  isNativeFunction,
-  typeOf,
-  uuid
-}
+export {default as assign} from './assign'
+export {default as create} from './create'
+export {default as isNativeFunction} from './isNativeFunction'
+export {default as typeOf} from './typeOf'
+export {default as uuid} from './uuid'
