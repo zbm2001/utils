@@ -1,11 +1,12 @@
 // 项目下直接运行命令 rollup -c
-const buble = require('rollup-plugin-buble');
-const pkg = require('./package.json');
+
+const buble = require('rollup-plugin-buble')
+const pkg = require('./package.json')
 const banner = '/*\n' +
 'name,version,description,author,license'.split(',')
 .map((k) => ` * @${k}: ${pkg[k]}`).join('\n') +
-'\n */';
-const external = Object.keys(pkg.devDependencies);
+'\n */'
+const external = Object.keys(pkg.devDependencies)
 
 module.exports = {
   entry: 'src/index.js',
@@ -26,10 +27,10 @@ module.exports = {
     }, {
       dest: 'utils.cjs.js',
       format: 'cjs'
-    }*/, {
+    }, {
       dest: 'utils.es.js',
       format: 'es'
-    }/*, {
+    }, {
       dest: 'utils.iife.js',
       format: 'iife'
     }, {
