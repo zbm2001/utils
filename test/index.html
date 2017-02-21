@@ -1,26 +1,61 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>实用工具集 utils</title>
-<style>
-pre{ padding: 10px 20px; border:1px solid #666; border-radius:3px; font: .9em/1.5em Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; }
-</style>
-<script src="../utils.js"></script>
-<script>
-(function(){
-this.writeForin = function(obj, name){
-  var html = '<ul><li>' + 
-  Object.keys(obj).map(function(key){
-    return name + '.' + key + 
-    ' (' + (typeof obj[key] == 'function' ? '方法' : '属性') + ')';
-  }).join('</li><li>') + 
-  '</li></ul>';
+  <meta charset="utf-8">
+  <title>实用工具集 utils</title>
+  <style>
+    body, pre {
+      font: 1em/1.5em "Microsoft YaHei", "FangSong", "STXihei", "STHeiti";
+    }
 
-  document.write(html);
-}
-})();
-</script>
+    pre {
+      padding: 10px 20px;
+      border: 1px solid #666;
+      border-radius: 3px;
+    }
+  </style>
+  <script src="../index.js"></script>
+  <script>
+    (function () {
+      document.writeForin = function (obj, name) {
+        var html = '<ul><li>' +
+            Object.keys(obj).map(function (key) {
+              var value = obj[key],
+                  valueStr = ''
+
+              switch (typeof value) {
+                case 'object':
+                  if (value) {
+                    valueStr = value.constructor.name
+                  } else {
+                    valueStr = 'null'
+                  }
+                  break
+                case 'function':
+                  valueStr = value.name + '()'
+                  break
+                default:
+                  valueStr = value + ''
+              }
+
+              return name + '.' + key + ': ' + valueStr
+
+            }).join('</li><li>') +
+            '</li></ul>'
+
+        document.write(html)
+      }
+
+      document.writeForinConstructor = function (func, isPrototype) {
+        var name = func.name
+        if (isPrototype) {
+          this.writeForin(func.prototype, name.charAt(0).toLowerCase() + name.slice(1))
+        } else {
+          this.writeForin(func, name)
+        }
+      }
+    })()
+  </script>
 </head>
 
 <body>
@@ -31,12 +66,12 @@ this.writeForin = function(obj, name){
 
 <h2>utils 原型方法和属性</h2>
 <script>
-writeForin(utils.prototype, 'utils');
+  document.writeForinConstructor(utils, !0)
 </script> -->
 
 <h2>utils 静态方法和属性</h2>
 <script>
-writeForin(utils, 'utils');
+  document.writeForin(utils);
 </script>
 </body>
 </html>
