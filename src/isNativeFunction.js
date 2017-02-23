@@ -1,6 +1,6 @@
 import typeOf from './typeOf'
 
-const sNativeCode = (s => s.slice(s.indexOf('{')))(isNaN + '')
+const sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'))
 /**
  * test function is a javascript native method
  *
