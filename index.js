@@ -1,6 +1,6 @@
 /*
  * @name: z-utils
- * @version: 1.1.2
+ * @version: 1.1.6
  * @description: javascript uitls
  * @author: zbm2001@aliyun.com
  * @license: Apache 2.0
@@ -21,7 +21,7 @@ function typeOf(object) {
   return toString.call(object).slice(8, -1)
 }
 
-var sNativeCode = (function (s) { return s.slice(s.indexOf('{')); })(isNaN + '');
+var sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'));
 /**
  * test function is a javascript native method
  *
@@ -110,6 +110,68 @@ if (!isNativeFunction(Object.create)) {
 var create = Object.create;
 
 /**
+ * function allways return false
+ * @return {Boolean} false
+ */
+function returnFalse (object) {
+  return false
+}
+
+/**
+ * 返回全局对象
+ * @return {Object} global
+ */
+var global$1 = (function () {
+  return this || (typeof global === 'object' && global && global.global === global ? global : window)
+})();
+
+/**
+ * 定义命名空间
+ * @return {Boolean} true
+ */
+var namespace = (Object.ns = Object.namespace = function namespace (root, sNamespace, variable) {
+  var namespaces, i, l;
+
+  if (typeof root === 'string') {
+    variable = sNamespace;
+    sNamespace = root;
+    root = global$1;
+  }
+
+  if (!root || typeof sNameSpace !== 'string') {
+    return
+  }
+
+  namespaces = sNamespace.split('.');
+  i = -1;
+  l = namespaces.length - 1;
+
+  // 若未定义，则为获取命名空间
+  if (typeof variable === 'undefined') {
+    while (++i < l) {
+      root = root[namespaces[i]];
+      if (!root) {
+        return
+      }
+    }
+    return root[namespaces[l]]
+  }
+
+  while (++i < l) {
+    root = root[namespaces[i]] || (root[namespaces[i]] = {});
+  }
+  return (root[namespaces[l]] = variable)
+});
+
+/**
+ * function allways return true
+ * @return {Boolean} true
+ */
+function returnTrue (object) {
+  return true
+}
+
+/**
  * 全局唯一标识符（GUID，Globally Unique Identifier）也称作 UUID(Universally Unique IDentifier) 。
  * GUID是一种由算法生成的二进制长度为128位的数字标识符。
  * GUID 的格式为“xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx”，其中的 x 是 0-9 或 a-f 范围内的一个32位十六进制数。
@@ -137,6 +199,10 @@ function uuid() {
 
 exports.assign = assign;
 exports.create = create;
+exports.returnFalse = returnFalse;
+exports.global = global$1;
 exports.isNativeFunction = isNativeFunction;
+exports.namespace = namespace;
+exports.returnTrue = returnTrue;
 exports.typeOf = typeOf;
 exports.uuid = uuid;
