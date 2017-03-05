@@ -4,16 +4,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var toString = Object.prototype.toString;
 
-/**
- * judge a object type name
- *
- * @param  {Object|Null|Undefined|String|Number|Function|Array|RegExp|HTMLDocument|HTMLHtmlElement|NodeList|XMLHttpRequest|...} object any
- * @return {String} string of type name, initials Capitalized
- */
-function typeOf(object) {
-  return toString.call(object).slice(8, -1)
-}
-
 var sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'));
 /**
  * test function is a javascript native method
@@ -22,7 +12,7 @@ var sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'));
  * @return {Boolean}
  */
 function isNativeFunction(func) {
-  return typeOf(func) === 'Function' && sNativeCode === (func += '').slice(func.indexOf('{'))
+  return toString.call(func) === '[object Function]' && sNativeCode === (func += '').slice(func.indexOf('{'))
 }
 
 if (!isNativeFunction(Object.assign)) {
@@ -102,6 +92,20 @@ if (!isNativeFunction(Object.create)) {
 
 var create = Object.create;
 
+if (!isNativeFunction(Array.isArray)) {
+  /**
+   * polyfill es5 Array.isArray
+   *
+   * @param {Array} arg
+   * @returns {Boolean}
+   */
+  Array.isArray = function isArray(arg) {
+    return toString.call(arg) === '[object Array]'
+  };
+}
+
+var isArray = Array.isArray;
+
 /**
  * function allways return false
  * @return {Boolean} false
@@ -165,6 +169,16 @@ function returnTrue (object) {
 }
 
 /**
+ * judge a object type name
+ *
+ * @param  {Object|Null|Undefined|String|Number|Function|Array|RegExp|HTMLDocument|HTMLHtmlElement|NodeList|XMLHttpRequest|...} object any
+ * @return {String} string of type name, initials Capitalized
+ */
+function typeOf(object) {
+  return toString.call(object).slice(8, -1)
+}
+
+/**
  * 全局唯一标识符（GUID，Globally Unique Identifier）也称作 UUID(Universally Unique IDentifier) 。
  * GUID是一种由算法生成的二进制长度为128位的数字标识符。
  * GUID 的格式为“xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx”，其中的 x 是 0-9 或 a-f 范围内的一个32位十六进制数。
@@ -192,10 +206,12 @@ function uuid() {
 
 exports.assign = assign;
 exports.create = create;
+exports.isArray = isArray;
 exports.returnFalse = returnFalse;
 exports.global = global$1;
 exports.isNativeFunction = isNativeFunction;
 exports.namespace = namespace;
 exports.returnTrue = returnTrue;
+exports.toString = toString;
 exports.typeOf = typeOf;
 exports.uuid = uuid;

@@ -1,4 +1,4 @@
-const toString = Object.prototype.toString
+import toString from './toString'
 
 /**
  * judge a object type name

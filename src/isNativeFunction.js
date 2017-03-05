@@ -1,4 +1,4 @@
-import typeOf from './typeOf'
+import toString from './toString'
 
 const sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'))
 /**
@@ -8,5 +8,5 @@ const sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'))
  * @return {Boolean}
  */
 export default function isNativeFunction(func) {
-  return typeOf(func) === 'Function' && sNativeCode === (func += '').slice(func.indexOf('{'))
+  return toString.call(func) === '[object Function]' && sNativeCode === (func += '').slice(func.indexOf('{'))
 }

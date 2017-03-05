@@ -1,23 +1,41 @@
 // 项目下直接运行命令 rollup -c
 
+const babel = require('rollup-plugin-babel')
 const buble = require('rollup-plugin-buble')
+const resolve = require('rollup-plugin-node-resolve')
+const commonjs = require('rollup-plugin-commonjs')
+const replace = require('rollup-plugin-replace')
 const pkg = require('./package.json')
 const banner = '/*\n' +
-'name,version,description,author,license'.split(',')
-.map((k) => ` * @${k}: ${pkg[k]}`).join('\n') +
-'\n */'
+    'name,version,description,author,license'.split(',')
+        .map((k) => ` * @${k}: ${pkg[k]}`).join('\n') +
+    '\n */'
 const external = Object.keys(pkg.devDependencies)
 
 module.exports = {
   entry: 'src/index.js',
   plugins: [
+    // resolve({
+    //   jsnext: true,
+    //   main: true,
+    //   browser: true,
+    // }),
+    // commonjs(),
+    // babel 遵循 es2015+ 标准，但执行较慢
+    // babel({
+    //   exclude: 'node_modules/**'
+    // }),
     // 结合 buble 比 babel 更快
     buble({
-      // exclude: 'node_modules/**'
+      exclude: 'node_modules/**'
+    }),
+    replace({
+      exclude: 'node_modules/**',
+      ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
     })
   ],
   external: external,
-  targets: [ // 多文件生成有BUG ！！var a,b; => var a; var b; var var a; var var b; ......
+  targets: [
     {
       dest: 'index.js',
       format: 'cjs'

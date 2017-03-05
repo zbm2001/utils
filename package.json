@@ -1,10 +1,10 @@
 {
   "name": "z-utils",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "description": "javascript uitls",
   "scripts": {
+    "dev": "node rollup",
     "build": "rollup -c",
-    "build:js": "node rollup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +24,11 @@
   "homepage": "https://github.com/zbm2001/utils#readme",
   "devDependencies": {
     "rollup": "^0.41.4",
+    "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^1.0.1",
     "uglify-js": "^2.7.5"
   }
