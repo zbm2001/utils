@@ -1,10 +1,3 @@
-/*
- * @name: z-utils
- * @version: 1.1.6
- * @description: javascript uitls
- * @author: zbm2001@aliyun.com
- * @license: Apache 2.0
- */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });

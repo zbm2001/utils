@@ -13,7 +13,7 @@ module.exports = {
   plugins: [
     // 结合 buble 比 babel 更快
     buble({
-      exclude: 'node_modules/**'
+      // exclude: 'node_modules/**'
     })
   ],
   external: external,
