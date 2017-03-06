@@ -1,11 +1,39 @@
-export {default as assign} from './assign'
-export {default as create} from './create'
-export {default as isArray} from './isArray'
-export {default as returnFalse} from './returnFalse'
-export {default as global} from './global'
-export {default as isNativeFunction} from './isNativeFunction'
-export {default as namespace} from './namespace'
-export {default as returnTrue} from './returnTrue'
-export {default as toString} from './toString'
-export {default as typeOf} from './typeOf'
-export {default as uuid} from './uuid'
+import assign from './assign'
+import create from './create'
+import isArray from './isArray'
+import returnFalse from './returnFalse'
+import global from './global'
+import isNativeFunction from './isNativeFunction'
+import namespace from './namespace'
+import returnTrue from './returnTrue'
+import toString from './toString'
+import typeOf from './typeOf'
+import uuid from './uuid'
+
+export {
+  assign,
+  create,
+  isArray,
+  returnFalse,
+  global,
+  isNativeFunction,
+  namespace,
+  returnTrue,
+  toString,
+  typeOf,
+  uuid
+}
+
+export default {
+  assign,
+  create,
+  isArray,
+  returnFalse,
+  global,
+  isNativeFunction,
+  namespace,
+  returnTrue,
+  toString,
+  typeOf,
+  uuid
+}

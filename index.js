@@ -204,6 +204,20 @@ function uuid() {
   return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4())
 }
 
+var index = {
+  assign: assign,
+  create: create,
+  isArray: isArray,
+  returnFalse: returnFalse,
+  global: global$1,
+  isNativeFunction: isNativeFunction,
+  namespace: namespace,
+  returnTrue: returnTrue,
+  toString: toString,
+  typeOf: typeOf,
+  uuid: uuid
+};
+
 exports.assign = assign;
 exports.create = create;
 exports.isArray = isArray;
@@ -215,3 +229,4 @@ exports.returnTrue = returnTrue;
 exports.toString = toString;
 exports.typeOf = typeOf;
 exports.uuid = uuid;
+exports['default'] = index;
