@@ -1,5 +1,5 @@
 /**
- * 返回全局对象
+ * get global object
  * @return {Object} global
  */
 export default (function () {

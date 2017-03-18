@@ -3,7 +3,7 @@ import isNativeFunction from './isNativeFunction'
 if (!isNativeFunction(Object.create)) {
 
   const hasOwnProperty = Object.prototype.hasOwnProperty
-  const REFERENCE_TYPE = {
+  const referenceTypes = {
     'object': !0,
     'function': !0
   }
@@ -16,19 +16,19 @@ if (!isNativeFunction(Object.create)) {
    * @returns {Object} like {__proto__: *}
    */
   Object.create = function create(object, props) {
-    if (object == null || !REFERENCE_TYPE[typeof object]) {
+    if (object == null || !referenceTypes[typeof object]) {
       throw 'Object prototype may only be an Object or null'
     }
 
     let proto = {__proto__: object}
 
     if (props) {
-      if (REFERENCE_TYPE[typeof props]) {
+      if (referenceTypes[typeof props]) {
         for (let propName in props) {
           if (hasOwnProperty.call(props, propName)) {
             let prop = props[propName]
 
-            if (prop && REFERENCE_TYPE[typeof prop]) {
+            if (prop && referenceTypes[typeof prop]) {
               object[propName] = prop.value
             } else {
               throw 'Property description must be an object: value'

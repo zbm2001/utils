@@ -9,7 +9,7 @@ npm i z-utils
 返回参数的类型名称
 
 #### 示例
-utils.typeOf(/a/) => "RegExp"
+utils.typeOf(/a/) => 'RegExp'
 
 ### assign(target/*, ...args*/)
 同 es5 的 Object.assign
@@ -21,13 +21,73 @@ utils.assign({a:1}, {b:2}) => {a:1,b:2}
 同 es5 的 Object.create
 
 #### 示例
-utils.assign(Array.prototype) => []
+utils.create(Array.prototype) => []
+
+### global
+js 全局宿主对象
+
+#### 示例
+utils.global => window or global
+
+### hasOwnProperty(key)
+即 Object.prototype.hasOwnProperty
+
+#### 示例
+utils.hasOwnProperty.call({a:1}, 'a') => true
+
+### isArray(arr)
+同 es5 的 Array.isArray
+
+#### 示例
+utils.isArray([]) => true
+
+### isEmptyObject(obj)
+判断对象是否有可枚举属性
+
+#### 示例
+utils.isEmptyObject({}) => true
+
+### isPlainObject(obj)
+判断对象是否由对象字面量或 new Object() 直接创建的
+
+#### 示例
+utils.isPlainObject({a:1}) => true
 
 ### isNativeFunction(func)
 判断参数是否为JS的原生方法
 
 #### 示例
 utils.isNativeFunction([].push) => true
+
+### namespace(root, sNamespace, variable)
+为对象或任何类型的变量创建命名空间
+
+#### 示例
+utils.namespace(window, 'a.b.c', 1) => windw.a.b.c === 1
+
+### returnFalse()
+始终返回 false 的函数
+
+#### 示例
+utils.returnFalse => returnFalse
+
+### returnTrue()
+始终返回 true 的函数
+
+#### 示例
+utils.returnTrue => returnTrue
+
+### toString()
+即 Object.prototype.toString
+
+#### 示例
+utils.toString.call([]) => '[object Array]'
+
+### typeOf(obj)
+即由 Object.prototype.toString.call(obj).slice(8, -1) 返回的结果
+
+#### 示例
+utils.typeOf([]) => 'Array'
 
 ### uuid()
 生成一个全局唯一标识符

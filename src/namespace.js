@@ -1,12 +1,11 @@
 import global from './global'
 
 /**
- * 定义命名空间
+ * set or get namespace
  * @return {Boolean} true
  */
 export default (Object.ns = Object.namespace = function namespace (root, sNamespace, variable) {
-  let namespaces, i, l
-
+  // 变量判断转化
   if (typeof root === 'string') {
     variable = sNamespace
     sNamespace = root
@@ -17,9 +16,9 @@ export default (Object.ns = Object.namespace = function namespace (root, sNamesp
     return
   }
 
-  namespaces = sNamespace.split('.')
-  i = -1
-  l = namespaces.length - 1
+  let namespaces = sNamespace.split('.')
+  let i = -1
+  let l = namespaces.length - 1
 
   // 若未定义，则为获取命名空间
   if (typeof variable === 'undefined') {
