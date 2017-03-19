@@ -6,6 +6,7 @@ import isArray from './isArray'
 import isEmptyObject from './isEmptyObject'
 import isNativeFunction from './isNativeFunction'
 import isPlainObject from './isPlainObject'
+import merge from './merge'
 import namespace from './namespace'
 import returnFalse from './returnFalse'
 import returnTrue from './returnTrue'
@@ -20,8 +21,9 @@ export {
   hasOwnProperty,
   isArray,
   isEmptyObject,
-  isPlainObject,
   isNativeFunction,
+  isPlainObject,
+  merge,
   namespace,
   returnFalse,
   returnTrue,
@@ -37,8 +39,9 @@ export default {
   hasOwnProperty,
   isArray,
   isEmptyObject,
-  isPlainObject,
   isNativeFunction,
+  isPlainObject,
+  merge,
   namespace,
   returnFalse,
   returnTrue,

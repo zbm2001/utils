@@ -59,6 +59,12 @@ utils.isPlainObject({a:1}) => true
 #### 示例
 utils.isNativeFunction([].push) => true
 
+### merge(target, ...overriders)
+将属性树深度合并到目标对象
+
+#### 示例
+utils.merge({a:{b:{c:1}}}, {a:{b:{d:2}}}) => {a:{b:{c:1,d:2}}}
+
 ### namespace(root, sNamespace, variable)
 为对象或任何类型的变量创建命名空间
 

@@ -49,14 +49,18 @@ if (!isNativeFunction(Object.assign)) {
 
 var assign = Object.assign;
 
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+/**
+ * reference types
+ * @return {Object}
+ */
+var referenceTypes = {
+  'object': !0,
+  'function': !0
+};
+
 if (!isNativeFunction(Object.create)) {
-
-  var hasOwnProperty = Object.prototype.hasOwnProperty;
-  var referenceTypes = {
-    'object': !0,
-    'function': !0
-  };
-
   /**
    * polyfill es5 Object.create
    *
@@ -99,8 +103,6 @@ var create = Object.create;
 var global$1 = (function () {
   return this || (typeof global === 'object' && global && global.global === global ? global : window)
 })();
-
-var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
 
 if (!isNativeFunction(Array.isArray)) {
   /**
@@ -155,7 +157,7 @@ function isPlainObject(obj) {
   if (!obj || toString.call(obj) !== "[object Object]") { return false }
   try {
     // Not own constructor property must be Object
-    if (obj.constructor && !hasOwnProperty$1.call(obj, "constructor") && !hasOwnProperty$1.call(obj.constructor.prototype, "isPrototypeOf")) {
+    if (obj.constructor && !hasOwnProperty.call(obj, "constructor") && !hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")) {
       return false;
     }
   } catch (e) {
@@ -164,12 +166,71 @@ function isPlainObject(obj) {
   }
   if (!firstTraverseOwnProperty) {
     for (var k$1 in obj) {
-      return hasOwnProperty$1.call(obj, k$1)
+      return hasOwnProperty.call(obj, k$1)
     }
     return true
   }
   for (var k$2 in obj) {}
-  return k === undefined || hasOwnProperty$1.call(obj, k)
+  return k === undefined || hasOwnProperty.call(obj, k)
+}
+
+/**
+ * object deep merge
+ *
+ * @param {Object} target
+ * @return {Object} target
+ */
+function merge(target/*, ...args*/) {
+  var arguments$1 = arguments;
+
+  if (target == null) {
+    throw new TypeError('Cannot convert undefined or null to object')
+  }
+
+  for (var l = arguments.length, i = 0; ++i < l;) {
+    var overrider = arguments$1[i];
+
+    if (overrider && overrider !== target) {
+      if (isArray(overrider)) {
+        mergeArray(target, overrider);
+      } else {
+        mergeObject(target, overrider);
+      }
+    }
+  }
+  return target
+
+  function mergeArray(target, overrider){
+    for (var n = overrider.length, k = -1; ++k < n;) {
+      deepMerge(target, overrider, k);
+    }
+  }
+
+  function mergeObject(target, overrider){
+    for (var k in overrider) {
+      deepMerge(target, overrider, k);
+    }
+  }
+
+  function deepMerge(target, overrider, key) {
+    var oValue = overrider[key];
+    var tValue = target[key];
+
+    if (oValue && oValue !== tValue && typeof oValue === 'object') {
+
+      if (isArray(oValue)) {
+        target[key] = mergeArray(tValue && isArray(tValue) ? tValue : [], oValue);
+
+      } else if (isPlainObject(oValue)) {
+        target[key] = mergeObject(tValue && isPlainObject(tValue) ? tValue : {}, oValue);
+
+      } else {
+        target[key] = oValue;
+      }
+    } else {
+      target[key] = oValue;
+    }
+  }
 }
 
 /**
@@ -265,11 +326,12 @@ var index = {
   assign: assign,
   create: create,
   global: global$1,
-  hasOwnProperty: hasOwnProperty$1,
+  hasOwnProperty: hasOwnProperty,
   isArray: isArray,
   isEmptyObject: isEmptyObject,
-  isPlainObject: isPlainObject,
   isNativeFunction: isNativeFunction,
+  isPlainObject: isPlainObject,
+  merge: merge,
   namespace: namespace,
   returnFalse: returnFalse,
   returnTrue: returnTrue,
@@ -281,11 +343,12 @@ var index = {
 exports.assign = assign;
 exports.create = create;
 exports.global = global$1;
-exports.hasOwnProperty = hasOwnProperty$1;
+exports.hasOwnProperty = hasOwnProperty;
 exports.isArray = isArray;
 exports.isEmptyObject = isEmptyObject;
-exports.isPlainObject = isPlainObject;
 exports.isNativeFunction = isNativeFunction;
+exports.isPlainObject = isPlainObject;
+exports.merge = merge;
 exports.namespace = namespace;
 exports.returnFalse = returnFalse;
 exports.returnTrue = returnTrue;

@@ -1,13 +1,8 @@
 import isNativeFunction from './isNativeFunction'
+import hasOwnProperty from './hasOwnProperty'
+import referenceTypes from './referenceTypes'
 
 if (!isNativeFunction(Object.create)) {
-
-  const hasOwnProperty = Object.prototype.hasOwnProperty
-  const referenceTypes = {
-    'object': !0,
-    'function': !0
-  }
-
   /**
    * polyfill es5 Object.create
    *
