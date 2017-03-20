@@ -2,6 +2,8 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var arraySlice = Array.prototype.slice;
+
 var toString = Object.prototype.toString;
 
 var sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'));
@@ -95,6 +97,8 @@ if (!isNativeFunction(Object.create)) {
 }
 
 var create = Object.create;
+
+var arrayForEach = Array.prototype.forEach;
 
 /**
  * get global object
@@ -286,6 +290,15 @@ function returnTrue (object) {
   return true
 }
 
+var slice = Array.prototype.slice;
+
+function toArray (obj, startIndex, endIndex) {
+  if (obj == null) {
+    throw new Error('can not convert from null or undefined')
+  }
+  return slice.call(obj, startIndex, endIndex)
+}
+
 /**
  * judge a object type name
  *
@@ -323,6 +336,8 @@ function uuid() {
 }
 
 var index = {
+  arraySlice: arraySlice,
+  arrayForEach: arrayForEach,
   assign: assign,
   create: create,
   global: global$1,
@@ -335,11 +350,14 @@ var index = {
   namespace: namespace,
   returnFalse: returnFalse,
   returnTrue: returnTrue,
+  toArray: toArray,
   toString: toString,
   typeOf: typeOf,
   uuid: uuid
 };
 
+exports.arraySlice = arraySlice;
+exports.arrayForEach = arrayForEach;
 exports.assign = assign;
 exports.create = create;
 exports.global = global$1;
@@ -352,6 +370,7 @@ exports.merge = merge;
 exports.namespace = namespace;
 exports.returnFalse = returnFalse;
 exports.returnTrue = returnTrue;
+exports.toArray = toArray;
 exports.toString = toString;
 exports.typeOf = typeOf;
 exports.uuid = uuid;

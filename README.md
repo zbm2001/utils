@@ -5,11 +5,17 @@ npm i z-utils
 
 ## 组件接口
 
-### typeOf(object)
+### typeOf(obj)
 返回参数的类型名称
 
 #### 示例
 utils.typeOf(/a/) => 'RegExp'
+
+### arraySlice(startIndex, endIndex)
+即 Array.prototytpe.slice
+
+#### 示例
+utils.arraySlice.call({length:1, 0:1}, 0, 1) => [1]
 
 ### assign(target/*, ...args*/)
 同 es5 的 Object.assign
@@ -17,11 +23,17 @@ utils.typeOf(/a/) => 'RegExp'
 #### 示例
 utils.assign({a:1}, {b:2}) => {a:1,b:2}
 
-### create(object, props)
+### create(obj, props)
 同 es5 的 Object.create
 
 #### 示例
 utils.create(Array.prototype) => []
+
+### arrayForEach(func, scope)
+即 Array.prototytpe.forEach
+
+#### 示例
+utils.arrayForEach.call({length:1, 0:1}, (v) => {}, null)
 
 ### global
 js 全局宿主对象
@@ -89,11 +101,11 @@ utils.returnTrue => returnTrue
 #### 示例
 utils.toString.call([]) => '[object Array]'
 
-### typeOf(obj)
-即由 Object.prototype.toString.call(obj).slice(8, -1) 返回的结果
+### toArray(obj, startIndex, endIndex)
+转换一个类数组对象为数组
 
 #### 示例
-utils.typeOf([]) => 'Array'
+utils.toArray({length:1, 0:1}, 0, 1) => [1]
 
 ### uuid()
 生成一个全局唯一标识符
