@@ -249,7 +249,7 @@ var namespace = (Object.ns = Object.namespace = function namespace (root, sNames
     root = global$1;
   }
 
-  if (!root || typeof sNameSpace !== 'string') {
+  if (!root || typeof sNamespace !== 'string') {
     return
   }
 

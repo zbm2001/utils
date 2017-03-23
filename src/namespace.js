@@ -12,7 +12,7 @@ export default (Object.ns = Object.namespace = function namespace (root, sNamesp
     root = global
   }
 
-  if (!root || typeof sNameSpace !== 'string') {
+  if (!root || typeof sNamespace !== 'string') {
     return
   }
 
