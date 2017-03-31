@@ -1,4 +1,4 @@
-import toString from './toString'
+import {toString} from './core'
 
 const sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'))
 /**

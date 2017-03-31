@@ -5,12 +5,6 @@ npm i z-utils
 
 ## 组件接口
 
-### typeOf(obj)
-返回参数的类型名称
-
-#### 示例
-utils.typeOf(/a/) => 'RegExp'
-
 ### arraySlice(startIndex, endIndex)
 即 Array.prototytpe.slice
 
@@ -23,17 +17,17 @@ utils.arraySlice.call({length:1, 0:1}, 0, 1) => [1]
 #### 示例
 utils.assign({a:1}, {b:2}) => {a:1,b:2}
 
-### create(obj, props)
-同 es5 的 Object.create
-
-#### 示例
-utils.create(Array.prototype) => []
-
 ### arrayForEach(func, scope)
 即 Array.prototytpe.forEach
 
 #### 示例
 utils.arrayForEach.call({length:1, 0:1}, (v) => {}, null)
+
+### create(obj, props)
+同 es5 的 Object.create
+
+#### 示例
+utils.create(Array.prototype) => []
 
 ### global
 js 全局宿主对象
@@ -59,17 +53,23 @@ utils.isArray([]) => true
 #### 示例
 utils.isEmptyObject({}) => true
 
+### isNativeFunction(func)
+判断参数是否为JS的原生方法
+
+#### 示例
+utils.isNativeFunction([].push) => true
+
 ### isPlainObject(obj)
 判断对象是否由对象字面量或 new Object() 直接创建的
 
 #### 示例
 utils.isPlainObject({a:1}) => true
 
-### isNativeFunction(func)
-判断参数是否为JS的原生方法
+### keys(object)
+获取一个对象的可枚举属性的数组
 
 #### 示例
-utils.isNativeFunction([].push) => true
+utils.keys({a: 1, b: 2}) => ['a', 'b']
 
 ### merge(target, ...overriders)
 将属性树深度合并到目标对象
@@ -82,6 +82,12 @@ utils.merge({a:{b:{c:1}}}, {a:{b:{d:2}}}) => {a:{b:{c:1,d:2}}}
 
 #### 示例
 utils.namespace(window, 'a.b.c', 1) => windw.a.b.c === 1
+
+### referenceTypes
+typeof 出的引用类型集
+
+#### 示例
+utils.referenceTypes => {'function': !0, 'object': !0}
 
 ### returnFalse()
 始终返回 false 的函数
@@ -106,6 +112,12 @@ utils.toString.call([]) => '[object Array]'
 
 #### 示例
 utils.toArray({length:1, 0:1}, 0, 1) => [1]
+
+### typeOf(obj)
+返回参数的类型名称
+
+#### 示例
+utils.typeOf(/a/) => 'RegExp'
 
 ### uuid()
 生成一个全局唯一标识符

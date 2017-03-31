@@ -1,11 +1,11 @@
 /**
  * test an object use 'for in'
  *
- * @param {Object} [obj]
+ * @param {Object} [object]
  * @return {Boolean}
  */
-export default function isEmptyObject(obj) {
-  for (let k in obj) {
+export default function isEmptyObject(object) {
+  for (let k in object) {
     return false
   }
   return true

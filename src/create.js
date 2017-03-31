@@ -1,6 +1,5 @@
 import isNativeFunction from './isNativeFunction'
-import hasOwnProperty from './hasOwnProperty'
-import referenceTypes from './referenceTypes'
+import {hasOwnProperty, noop, referenceTypes, support__proto__} from './core'
 
 if (!isNativeFunction(Object.create)) {
   /**
@@ -15,7 +14,7 @@ if (!isNativeFunction(Object.create)) {
       throw 'Object prototype may only be an Object or null'
     }
 
-    let proto = {__proto__: object}
+    let proto = support__proto__ ? {__proto__: object} : (noop.prototype = object, new noop)
 
     if (props) {
       if (referenceTypes[typeof props]) {

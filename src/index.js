@@ -1,46 +1,39 @@
-import arraySlice from './arraySlice'
 import assign from './assign'
 import create from './create'
-import arrayForEach from './arrayForEach'
 import global from './global'
-import hasOwnProperty from './hasOwnProperty'
 import isArray from './isArray'
 import isEmptyObject from './isEmptyObject'
 import isNativeFunction from './isNativeFunction'
 import isPlainObject from './isPlainObject'
+import keys from './keys'
 import merge from './merge'
 import namespace from './namespace'
-import returnFalse from './returnFalse'
-import returnTrue from './returnTrue'
 import toArray from './toArray'
-import toString from './toString'
 import typeOf from './typeOf'
 import uuid from './uuid'
+import {arrayForEach, arraySlice, hasOwnProperty, noop, referenceTypes, returnFalse, returnTrue, support__proto__, toString} from './core'
+
+export * from './core'
 
 export {
-  arraySlice,
-  arrayForEach,
   assign,
   create,
   global,
-  hasOwnProperty,
   isArray,
   isEmptyObject,
   isNativeFunction,
   isPlainObject,
+  keys,
   merge,
   namespace,
-  returnFalse,
-  returnTrue,
   toArray,
-  toString,
   typeOf,
   uuid
 }
 
 export default {
-  arraySlice,
   arrayForEach,
+  arraySlice,
   assign,
   create,
   global,
@@ -49,10 +42,14 @@ export default {
   isEmptyObject,
   isNativeFunction,
   isPlainObject,
+  keys,
   merge,
+  noop,
   namespace,
+  referenceTypes,
   returnFalse,
   returnTrue,
+  support__proto__,
   toArray,
   toString,
   typeOf,

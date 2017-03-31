@@ -1,5 +1,4 @@
-import toString from './toString'
-import hasOwnProperty from './hasOwnProperty'
+import {hasOwnProperty, toString} from './core'
 import create from './create'
 
 /**
@@ -18,17 +17,17 @@ const firstTraverseOwnProperty = function () {
 /**
  * test an object is plain (eg: {} or new Object() created)
  *
- * @param {Object} [obj]
+ * @param {Object} [object]
  * @return {Boolean}
  */
-export default function isPlainObject(obj) {
+export default function isPlainObject(object) {
   // Must be an Object.
   // Because of IE, we also have to check the presence of the constructor property.
   // Make sure that DOM nodes and window objects don't pass through, as well
-  if (!obj || toString.call(obj) !== "[object Object]") return false
+  if (!object || toString.call(object) !== "[object Object]") return false
   try {
     // Not own constructor property must be Object
-    if (obj.constructor && !hasOwnProperty.call(obj, "constructor") && !hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")) {
+    if (object.constructor && !hasOwnProperty.call(object, "constructor") && !hasOwnProperty.call(object.constructor.prototype, "isPrototypeOf")) {
       return false;
     }
   } catch (e) {
@@ -36,11 +35,11 @@ export default function isPlainObject(obj) {
     return false;
   }
   if (!firstTraverseOwnProperty) {
-    for (let k in obj) {
-      return hasOwnProperty.call(obj, k)
+    for (let k in object) {
+      return hasOwnProperty.call(object, k)
     }
     return true
   }
-  for (let k in obj) {}
-  return k === undefined || hasOwnProperty.call(obj, k)
+  for (let k in object) {}
+  return k === undefined || hasOwnProperty.call(object, k)
 }

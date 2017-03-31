@@ -2,9 +2,40 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var arraySlice = Array.prototype.slice;
+var AP = Array.prototype;
+var OP = Object.prototype;
 
-var toString = Object.prototype.toString;
+var arrayForEach = AP.forEach;
+var arraySlice = AP.slice;
+var toString = OP.toString;
+var hasOwnProperty = OP.hasOwnProperty;
+
+var referenceTypes = {'object': !0, 'function': !0};
+
+var support__proto__ = typeof __proto__ !== 'undefined';
+
+/**
+ * function empty, do nothing
+ * @return {Undefined}
+ */
+function noop () {
+}
+
+/**
+ * function allways return false
+ * @return {Boolean} false
+ */
+function returnFalse () {
+  return false
+}
+
+/**
+ * function allways return true
+ * @return {Boolean} true
+ */
+function returnTrue () {
+  return true
+}
 
 var sNativeCode = (isNaN + '').slice((isNaN + '').indexOf('{'));
 /**
@@ -51,17 +82,6 @@ if (!isNativeFunction(Object.assign)) {
 
 var assign = Object.assign;
 
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-/**
- * reference types
- * @return {Object}
- */
-var referenceTypes = {
-  'object': !0,
-  'function': !0
-};
-
 if (!isNativeFunction(Object.create)) {
   /**
    * polyfill es5 Object.create
@@ -75,7 +95,7 @@ if (!isNativeFunction(Object.create)) {
       throw 'Object prototype may only be an Object or null'
     }
 
-    var proto = {__proto__: object};
+    var proto = support__proto__ ? {__proto__: object} : (noop.prototype = object, new noop);
 
     if (props) {
       if (referenceTypes[typeof props]) {
@@ -97,8 +117,6 @@ if (!isNativeFunction(Object.create)) {
 }
 
 var create = Object.create;
-
-var arrayForEach = Array.prototype.forEach;
 
 /**
  * get global object
@@ -125,11 +143,11 @@ var isArray = Array.isArray;
 /**
  * test an object use 'for in'
  *
- * @param {Object} [obj]
+ * @param {Object} [object]
  * @return {Boolean}
  */
-function isEmptyObject(obj) {
-  for (var k in obj) {
+function isEmptyObject(object) {
+  for (var k in object) {
     return false
   }
   return true
@@ -151,17 +169,17 @@ var firstTraverseOwnProperty = function () {
 /**
  * test an object is plain (eg: {} or new Object() created)
  *
- * @param {Object} [obj]
+ * @param {Object} [object]
  * @return {Boolean}
  */
-function isPlainObject(obj) {
+function isPlainObject(object) {
   // Must be an Object.
   // Because of IE, we also have to check the presence of the constructor property.
   // Make sure that DOM nodes and window objects don't pass through, as well
-  if (!obj || toString.call(obj) !== "[object Object]") { return false }
+  if (!object || toString.call(object) !== "[object Object]") { return false }
   try {
     // Not own constructor property must be Object
-    if (obj.constructor && !hasOwnProperty.call(obj, "constructor") && !hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")) {
+    if (object.constructor && !hasOwnProperty.call(object, "constructor") && !hasOwnProperty.call(object.constructor.prototype, "isPrototypeOf")) {
       return false;
     }
   } catch (e) {
@@ -169,14 +187,45 @@ function isPlainObject(obj) {
     return false;
   }
   if (!firstTraverseOwnProperty) {
-    for (var k$1 in obj) {
-      return hasOwnProperty.call(obj, k$1)
+    for (var k$1 in object) {
+      return hasOwnProperty.call(object, k$1)
     }
     return true
   }
-  for (var k$2 in obj) {}
-  return k === undefined || hasOwnProperty.call(obj, k)
+  for (var k$2 in object) {}
+  return k === undefined || hasOwnProperty.call(object, k)
 }
+
+if (!isNativeFunction(Object.keys)) {
+  var unableEnumerateOwnKeys, key;
+  for (key in {toString: 1}) { break }
+
+  // IE 某些属性即便为自身属性也无法枚举
+  key || (unableEnumerateOwnKeys = 'constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf'.split(' '));
+
+  /**
+   * polyfill es5.1 Object.keys
+   *
+   * @param {Object} object
+   * @returns {Object} like {__proto__: *}
+   */
+  Object.keys = function keys (object) {
+    var arrkeys = [], key, l, i;
+    if( unableEnumerateOwnKeys ){
+      l = unableEnumerateOwnKeys.length;
+      i = -1;
+      while( ++i < l ){
+        hasOwnProperty.call(object, unableEnumerateOwnKeys[i]) && (arrkeys[ l++ ] = unableEnumerateOwnKeys[i]);
+      }
+    }
+    for( key in object ){
+      hasOwnProperty.call(object, key) && (arrkeys[ l++ ] = key);
+    }
+    return arrkeys
+  };
+}
+
+var keys = Object.keys;
 
 /**
  * object deep merge
@@ -274,29 +323,13 @@ var namespace = (Object.ns = Object.namespace = function namespace (root, sNames
   return (root[namespaces[l]] = variable)
 });
 
-/**
- * function allways return false
- * @return {Boolean} false
- */
-function returnFalse (object) {
-  return false
-}
-
-/**
- * function allways return true
- * @return {Boolean} true
- */
-function returnTrue (object) {
-  return true
-}
-
 var slice = Array.prototype.slice;
 
-function toArray (obj, startIndex, endIndex) {
-  if (obj == null) {
+function toArray (object, startIndex, endIndex) {
+  if (object == null) {
     throw new Error('can not convert from null or undefined')
   }
-  return slice.call(obj, startIndex, endIndex)
+  return slice.call(object, startIndex, endIndex)
 }
 
 /**
@@ -305,8 +338,8 @@ function toArray (obj, startIndex, endIndex) {
  * @param  {Object|Null|Undefined|String|Number|Function|Array|RegExp|HTMLDocument|HTMLHtmlElement|NodeList|XMLHttpRequest|...} object any
  * @return {String} string of type name, initials Capitalized
  */
-function typeOf(obj) {
-  return toString.call(obj).slice(8, -1)
+function typeOf(object) {
+  return toString.call(object).slice(8, -1)
 }
 
 /**
@@ -336,8 +369,8 @@ function uuid() {
 }
 
 var index = {
-  arraySlice: arraySlice,
   arrayForEach: arrayForEach,
+  arraySlice: arraySlice,
   assign: assign,
   create: create,
   global: global$1,
@@ -346,32 +379,40 @@ var index = {
   isEmptyObject: isEmptyObject,
   isNativeFunction: isNativeFunction,
   isPlainObject: isPlainObject,
+  keys: keys,
   merge: merge,
+  noop: noop,
   namespace: namespace,
+  referenceTypes: referenceTypes,
   returnFalse: returnFalse,
   returnTrue: returnTrue,
+  support__proto__: support__proto__,
   toArray: toArray,
   toString: toString,
   typeOf: typeOf,
   uuid: uuid
 };
 
-exports.arraySlice = arraySlice;
-exports.arrayForEach = arrayForEach;
 exports.assign = assign;
 exports.create = create;
 exports.global = global$1;
-exports.hasOwnProperty = hasOwnProperty;
 exports.isArray = isArray;
 exports.isEmptyObject = isEmptyObject;
 exports.isNativeFunction = isNativeFunction;
 exports.isPlainObject = isPlainObject;
+exports.keys = keys;
 exports.merge = merge;
 exports.namespace = namespace;
-exports.returnFalse = returnFalse;
-exports.returnTrue = returnTrue;
 exports.toArray = toArray;
-exports.toString = toString;
 exports.typeOf = typeOf;
 exports.uuid = uuid;
 exports['default'] = index;
+exports.arrayForEach = arrayForEach;
+exports.arraySlice = arraySlice;
+exports.toString = toString;
+exports.hasOwnProperty = hasOwnProperty;
+exports.referenceTypes = referenceTypes;
+exports.support__proto__ = support__proto__;
+exports.noop = noop;
+exports.returnFalse = returnFalse;
+exports.returnTrue = returnTrue;

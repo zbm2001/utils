@@ -1,5 +1,5 @@
 import isNativeFunction from './isNativeFunction'
-import toString from './toString'
+import {toString} from './core'
 
 if (!isNativeFunction(Array.isArray)) {
   /**
