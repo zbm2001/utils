@@ -12,7 +12,7 @@ var hasOwnProperty = OP.hasOwnProperty;
 
 var referenceTypes = {'object': !0, 'function': !0};
 
-var support__proto__ = typeof __proto__ !== 'undefined';
+var support__proto__ = '__proto__' in {};
 
 /**
  * function empty, do nothing

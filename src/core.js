@@ -8,7 +8,7 @@ export const hasOwnProperty = OP.hasOwnProperty
 
 export const referenceTypes = {'object': !0, 'function': !0}
 
-export const support__proto__ = typeof __proto__ !== 'undefined'
+export const support__proto__ = '__proto__' in {}
 
 /**
  * function empty, do nothing
