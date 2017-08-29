@@ -11,7 +11,7 @@ import namespace from './namespace'
 import toArray from './toArray'
 import typeOf from './typeOf'
 import uuid from './uuid'
-import {arrayForEach, arraySlice, hasOwnProperty, noop, referenceTypes, returnFalse, returnTrue, support__proto__, toString} from './core'
+import {arrayForEach, arraySlice, hasOwnProperty, isClient, isServer, noop, referenceTypes, returnFalse, returnTrue, support__proto__, toString} from './core'
 
 export * from './core'
 
@@ -39,9 +39,11 @@ export default {
   global,
   hasOwnProperty,
   isArray,
+  isClient,
   isEmptyObject,
   isNativeFunction,
   isPlainObject,
+  isServer,
   keys,
   merge,
   noop,

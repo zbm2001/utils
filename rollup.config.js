@@ -13,7 +13,7 @@ const banner = '/*\n' +
 const external = Object.keys(pkg.devDependencies)
 
 module.exports = {
-  entry: 'src/index.js',
+  input: 'src/index.js', // entry -> input
   plugins: [
     // resolve({
     //   jsnext: true,
@@ -31,34 +31,34 @@ module.exports = {
     }),
     replace({
       exclude: 'node_modules/**',
-      ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+      ENV: JSON.stringify(process.env.NODE_ENV || 'development')
     })
   ],
   external: external,
   targets: [
     {
-      dest: 'index.js',
+      file: 'index.js', // dest -> file
       format: 'cjs'
     }/*, {
-      dest: 'utils.amd.js',
+      file: 'utils.amd.js',
       format: 'amd'
     }, {
-      dest: 'utils.cjs.js',
+      file: 'utils.cjs.js',
       format: 'cjs'
     }, {
-      dest: 'utils.es.js',
+      file: 'utils.es.js',
       format: 'es'
     }, {
-      dest: 'utils.iife.js',
+      file: 'utils.iife.js',
       format: 'iife'
     }, {
-      dest: 'utils.umd.js',
+      file: 'utils.umd.js',
       format: 'umd'
     }*/
   ],
   banner: banner,
   // format: 'iife', // cjs amd es6 umd iife
-  moduleName: 'utils', // umd 或 iife 模式下，若入口文件含 export，必须加上该属性
-  // dest: 'utils.js', // 输出文件
-  // sourceMap: false   // 调试编译
+  name: 'utils' // umd 或 iife 模式下，若入口文件含 export，必须加上该属性 moduleName -> name
+  // file: 'utils.js', // 输出文件 dest -> file
+  // sourcemap: false   // 调试编译 sourceMap -> sourcemap
 }

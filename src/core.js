@@ -1,7 +1,5 @@
-import global from 'global'
-
-const isClient = global.window && global.window === global
-const isServer = !isClient
+export const isClient = typeof window === 'object' && !!window && window === window.window
+export const isServer = !isClient
 
 const AP = Array.prototype
 const OP = Object.prototype

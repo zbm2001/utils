@@ -2,6 +2,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var isClient = typeof window === 'object' && !!window && window === window.window;
+var isServer = !isClient;
+
 var AP = Array.prototype;
 var OP = Object.prototype;
 
@@ -122,9 +125,7 @@ var create = Object.create;
  * get global object
  * @return {Object} global
  */
-var global$1 = (function () {
-  return this || (typeof global === 'object' && global && global.global === global ? global : window)
-})();
+var global = new Function('return this || (typeof global === "object" && global && global.global === global ? global : window)')();
 
 if (!isNativeFunction(Array.isArray)) {
   /**
@@ -192,15 +193,11 @@ function isPlainObject(object) {
     }
     return true
   }
-  for (var k$2 in object) {}
   return k === undefined || hasOwnProperty.call(object, k)
 }
 
 if (!isNativeFunction(Object.keys)) {
   var unableEnumerateOwnKeys, key;
-  for (key in {toString: 1}) { break }
-
-  // IE 某些属性即便为自身属性也无法枚举
   key || (unableEnumerateOwnKeys = 'constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf'.split(' '));
 
   /**
@@ -295,7 +292,7 @@ var namespace = (Object.ns = Object.namespace = function namespace (root, sNames
   if (typeof root === 'string') {
     variable = sNamespace;
     sNamespace = root;
-    root = global$1;
+    root = global;
   }
 
   if (!root || typeof sNamespace !== 'string') {
@@ -373,12 +370,14 @@ var index = {
   arraySlice: arraySlice,
   assign: assign,
   create: create,
-  global: global$1,
+  global: global,
   hasOwnProperty: hasOwnProperty,
   isArray: isArray,
+  isClient: isClient,
   isEmptyObject: isEmptyObject,
   isNativeFunction: isNativeFunction,
   isPlainObject: isPlainObject,
+  isServer: isServer,
   keys: keys,
   merge: merge,
   noop: noop,
@@ -395,7 +394,7 @@ var index = {
 
 exports.assign = assign;
 exports.create = create;
-exports.global = global$1;
+exports.global = global;
 exports.isArray = isArray;
 exports.isEmptyObject = isEmptyObject;
 exports.isNativeFunction = isNativeFunction;
@@ -407,6 +406,8 @@ exports.toArray = toArray;
 exports.typeOf = typeOf;
 exports.uuid = uuid;
 exports['default'] = index;
+exports.isClient = isClient;
+exports.isServer = isServer;
 exports.arrayForEach = arrayForEach;
 exports.arraySlice = arraySlice;
 exports.toString = toString;
