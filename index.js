@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var isClient = typeof window === 'object' && !!window && window === window.window;
+var isClient = typeof window === "object" && window && window.window === window;
 var isServer = !isClient;
 
 var AP = Array.prototype;
@@ -365,33 +365,6 @@ function uuid() {
   return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4())
 }
 
-var index = {
-  arrayForEach: arrayForEach,
-  arraySlice: arraySlice,
-  assign: assign,
-  create: create,
-  global: global,
-  hasOwnProperty: hasOwnProperty,
-  isArray: isArray,
-  isClient: isClient,
-  isEmptyObject: isEmptyObject,
-  isNativeFunction: isNativeFunction,
-  isPlainObject: isPlainObject,
-  isServer: isServer,
-  keys: keys,
-  merge: merge,
-  noop: noop,
-  namespace: namespace,
-  referenceTypes: referenceTypes,
-  returnFalse: returnFalse,
-  returnTrue: returnTrue,
-  support__proto__: support__proto__,
-  toArray: toArray,
-  toString: toString,
-  typeOf: typeOf,
-  uuid: uuid
-};
-
 exports.assign = assign;
 exports.create = create;
 exports.global = global;
@@ -405,7 +378,6 @@ exports.namespace = namespace;
 exports.toArray = toArray;
 exports.typeOf = typeOf;
 exports.uuid = uuid;
-exports['default'] = index;
 exports.isClient = isClient;
 exports.isServer = isServer;
 exports.arrayForEach = arrayForEach;
