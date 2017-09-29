@@ -1,4 +1,4 @@
-import {toString} from './core'
+import {toString} from './const'
 
 /**
  * judge a object type name

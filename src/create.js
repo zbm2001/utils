@@ -1,5 +1,5 @@
 import isNativeFunction from './isNativeFunction'
-import {hasOwnProperty, noop, referenceTypes, support__proto__} from './core'
+import {hasOwnProperty, noop, referenceTypes, support__proto__} from './const'
 
 if (!isNativeFunction(Object.create)) {
   /**

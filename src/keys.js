@@ -1,5 +1,5 @@
 import isNativeFunction from './isNativeFunction'
-import {hasOwnProperty} from './core'
+import {hasOwnProperty} from './const'
 
 if (!isNativeFunction(Object.keys)) {
   let unableEnumerateOwnKeys, key

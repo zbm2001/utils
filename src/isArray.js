@@ -1,16 +1,12 @@
 import isNativeFunction from './isNativeFunction'
-import {toString} from './core'
+import {toString} from './const'
 
-if (!isNativeFunction(Array.isArray)) {
-  /**
-   * polyfill es5 Array.isArray
-   *
-   * @param {Array} arg
-   * @returns {Boolean}
-   */
-  Array.isArray = function isArray(arg) {
-    return toString.call(arg) === '[object Array]'
-  }
-}
-
-export default Array.isArray
+/**
+ * polyfill es5 Array.isArray
+ *
+ * @param {Array} arg
+ * @returns {Boolean}
+ */
+export default isNativeFunction(Array.isArray) ? Array.isArray : (Array.isArray = function isArray(arg) {
+  return toString.call(arg) === '[object Array]'
+})

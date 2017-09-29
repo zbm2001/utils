@@ -1,4 +1,4 @@
-import {hasOwnProperty, toString} from './core'
+import {hasOwnProperty, toString} from './const'
 import create from './create'
 
 /**

@@ -65,7 +65,7 @@ if (!isNativeFunction(Object.assign)) {
 
     var output = Object(target),
         i = -1,
-        args = Array.prototype.slice.call(arguments, 1),
+        args = arraySlice.call(arguments, 1),
         l = args.length;
 
     while (++i < l) {
@@ -127,19 +127,21 @@ var create = Object.create;
  */
 var global = new Function('return this || (typeof global === "object" && global && global.global === global ? global : window)')();
 
-if (!isNativeFunction(Array.isArray)) {
-  /**
-   * polyfill es5 Array.isArray
-   *
-   * @param {Array} arg
-   * @returns {Boolean}
-   */
-  Array.isArray = function isArray(arg) {
-    return toString.call(arg) === '[object Array]'
-  };
-}
+// if (!isNativeFunction(Array.isArray)) {
+//   /**
+//    * polyfill es5 Array.isArray
+//    *
+//    * @param {Array} arg
+//    * @returns {Boolean}
+//    */
+//   Array.isArray = function isArray(arg) {
+//     return toString.call(arg) === '[object Array]'
+//   }
+// }
 
-var isArray = Array.isArray;
+var isArray = isNativeFunction(Array.isArray) ? Array.isArray : (Array.isArray = function isArray(arg) {
+  return toString.call(arg) === '[object Array]'
+});
 
 /**
  * test an object use 'for in'
@@ -320,13 +322,11 @@ var namespace = (Object.ns = Object.namespace = function namespace (root, sNames
   return (root[namespaces[l]] = variable)
 });
 
-var slice = Array.prototype.slice;
-
 function toArray (object, startIndex, endIndex) {
   if (object == null) {
     throw new Error('can not convert from null or undefined')
   }
-  return slice.call(object, startIndex, endIndex)
+  return arraySlice.call(object, startIndex, endIndex)
 }
 
 /**
