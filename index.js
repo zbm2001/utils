@@ -174,7 +174,7 @@ function isPlainObject (object) {
   var k;
   if (firstTraverseOwnProperty) {
     for (k in object) {
-      0;
+      0; // fix rollup bug
     }
     return typeof k !== 'string' || hasOwnProperty.call(object, k)
   }
@@ -187,7 +187,7 @@ function isPlainObject (object) {
 var keys = isNativeFunction(Object.keys) ? Object.keys : function () {
   var unableEnumerateOwnKeys, key;
   for (key in {toString: 1}) {
-    0;
+    0; // fix rollup bug
     break
   }
 
@@ -344,7 +344,7 @@ function typeOf(object) {
  * return {String} length{4} 0-9 or a-f 范围内的一个32位十六进制数
  */
 function S4() {
-  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+  return (((1 + Math.random()) * 0x10000) | 0).toString(16).slice(1)
 }
 
 /**
