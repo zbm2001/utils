@@ -20,7 +20,7 @@ const firstTraverseOwnProperty = function () {
  * @param {Object} [object]
  * @return {Boolean}
  */
-export default function isPlainObject(object) {
+export default function isPlainObject (object) {
   // Must be an Object.
   // Because of IE, we also have to check the presence of the constructor property.
   // Make sure that DOM nodes and window objects don't pass through, as well
@@ -28,18 +28,21 @@ export default function isPlainObject(object) {
   try {
     // Not own constructor property must be Object
     if (object.constructor && !hasOwnProperty.call(object, "constructor") && !hasOwnProperty.call(object.constructor.prototype, "isPrototypeOf")) {
-      return false;
+      return false
     }
   } catch (e) {
     // IE8,9 Will throw exceptions on certain host objects
-    return false;
+    return false
   }
-  if (!firstTraverseOwnProperty) {
-    for (let k in object) {
-      return hasOwnProperty.call(object, k)
+  let k
+  if (firstTraverseOwnProperty) {
+    for (k in object) {
+      0 // fix rollup bug
     }
-    return true
+    return typeof k !== 'string' || hasOwnProperty.call(object, k)
   }
-  for (let k in object) {}
-  return k === undefined || hasOwnProperty.call(object, k)
+  for (k in object) {
+    return hasOwnProperty.call(object, k)
+  }
+  return true
 }

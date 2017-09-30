@@ -2,7 +2,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var isClient = typeof window === "object" && window && window.window === window;
+var global = new Function('return this')();
+
+var isClient = typeof window === "object" && window === global;
 var isServer = !isClient;
 
 var AP = Array.prototype;
@@ -51,94 +53,74 @@ function isNativeFunction(func) {
   return toString.call(func) === '[object Function]' && sNativeCode === (func += '').slice(func.indexOf('{'))
 }
 
-if (!isNativeFunction(Object.assign)) {
-  /**
-   * polyfill es2015 Object.assign
-   *
-   * @param {Object} target
-   * @returns {Object} target
-   */
-  Object.assign = function assign(target/*, ...args*/) {
-    if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object')
-    }
+/**
+ * polyfill es2015 Object.assign
+ *
+ * @param {Object} target
+ * @returns {Object} target
+ */
+var assign = isNativeFunction(Object.assign) ? Object.assign : (Object.assign = function assign(target/*, ...args*/) {
+  if (target == null) {
+    throw new TypeError('Cannot convert undefined or null to object')
+  }
 
-    var output = Object(target),
-        i = -1,
-        args = arraySlice.call(arguments, 1),
-        l = args.length;
+  var output = Object(target),
+      i = -1,
+      args = arraySlice.call(arguments, 1),
+      l = args.length;
 
-    while (++i < l) {
-      var source = args[i];
+  while (++i < l) {
+    var source = args[i];
 
-      if (source) {
-        for (var prop in source) {
-          if (source.hasOwnProperty(prop)) {
-            output[prop] = source[prop];
-          }
+    if (source) {
+      for (var prop in source) {
+        if (source.hasOwnProperty(prop)) {
+          output[prop] = source[prop];
         }
       }
     }
-    return output
-  };
-}
-
-var assign = Object.assign;
-
-if (!isNativeFunction(Object.create)) {
-  /**
-   * polyfill es5 Object.create
-   *
-   * @param {Object} object
-   * @param {Object} props
-   * @returns {Object} like {__proto__: *}
-   */
-  Object.create = function create(object, props) {
-    if (object == null || !referenceTypes[typeof object]) {
-      throw 'Object prototype may only be an Object or null'
-    }
-
-    var proto = support__proto__ ? {__proto__: object} : (noop.prototype = object, new noop);
-
-    if (props) {
-      if (referenceTypes[typeof props]) {
-        for (var propName in props) {
-          if (hasOwnProperty.call(props, propName)) {
-            var prop = props[propName];
-
-            if (prop && referenceTypes[typeof prop]) {
-              object[propName] = prop.value;
-            } else {
-              throw 'Property description must be an object: value'
-            }
-          }
-        }
-      }
-    }
-    return proto
-  };
-}
-
-var create = Object.create;
+  }
+  return output
+});
 
 /**
- * get global object
- * @return {Object} global
+ * polyfill es5 Object.create
+ *
+ * @param {Object} object
+ * @param {Object} props
+ * @returns {Object} like {__proto__: *}
  */
-var global = new Function('return this || (typeof global === "object" && global && global.global === global ? global : window)')();
+var create = isNativeFunction(Object.create) ? Object.create : (Object.create = function create(object, props) {
+  if (object == null || !referenceTypes[typeof object]) {
+    throw 'Object prototype may only be an Object or null'
+  }
 
-// if (!isNativeFunction(Array.isArray)) {
-//   /**
-//    * polyfill es5 Array.isArray
-//    *
-//    * @param {Array} arg
-//    * @returns {Boolean}
-//    */
-//   Array.isArray = function isArray(arg) {
-//     return toString.call(arg) === '[object Array]'
-//   }
-// }
+  var proto = support__proto__ ? {__proto__: object} : (noop.prototype = object, new noop);
 
+  if (props) {
+    if (referenceTypes[typeof props]) {
+      for (var propName in props) {
+        if (hasOwnProperty.call(props, propName)) {
+          var prop = props[propName];
+
+          if (prop && referenceTypes[typeof prop]) {
+            object[propName] = prop.value;
+          } else {
+            throw 'Property description must be an object: value'
+          }
+        }
+      }
+    }
+  }
+  return proto
+});
+
+/**
+ * polyfill es5 Array.isArray
+ *
+ * @param {Array} arg
+ * @returns {Boolean}
+ */
 var isArray = isNativeFunction(Array.isArray) ? Array.isArray : (Array.isArray = function isArray(arg) {
   return toString.call(arg) === '[object Array]'
 });
@@ -175,7 +157,7 @@ var firstTraverseOwnProperty = function () {
  * @param {Object} [object]
  * @return {Boolean}
  */
-function isPlainObject(object) {
+function isPlainObject (object) {
   // Must be an Object.
   // Because of IE, we also have to check the presence of the constructor property.
   // Make sure that DOM nodes and window objects don't pass through, as well
@@ -183,23 +165,33 @@ function isPlainObject(object) {
   try {
     // Not own constructor property must be Object
     if (object.constructor && !hasOwnProperty.call(object, "constructor") && !hasOwnProperty.call(object.constructor.prototype, "isPrototypeOf")) {
-      return false;
+      return false
     }
   } catch (e) {
     // IE8,9 Will throw exceptions on certain host objects
-    return false;
+    return false
   }
-  if (!firstTraverseOwnProperty) {
-    for (var k$1 in object) {
-      return hasOwnProperty.call(object, k$1)
+  var k;
+  if (firstTraverseOwnProperty) {
+    for (k in object) {
+      0;
     }
-    return true
+    return typeof k !== 'string' || hasOwnProperty.call(object, k)
   }
-  return k === undefined || hasOwnProperty.call(object, k)
+  for (k in object) {
+    return hasOwnProperty.call(object, k)
+  }
+  return true
 }
 
-if (!isNativeFunction(Object.keys)) {
+var keys = isNativeFunction(Object.keys) ? Object.keys : function () {
   var unableEnumerateOwnKeys, key;
+  for (key in {toString: 1}) {
+    0;
+    break
+  }
+
+  // IE 某些属性即便为自身属性也无法枚举
   key || (unableEnumerateOwnKeys = 'constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf'.split(' '));
 
   /**
@@ -208,23 +200,21 @@ if (!isNativeFunction(Object.keys)) {
    * @param {Object} object
    * @returns {Object} like {__proto__: *}
    */
-  Object.keys = function keys (object) {
+  return (Object.keys = function keys (object) {
     var arrkeys = [], key, l, i;
-    if( unableEnumerateOwnKeys ){
+    if (unableEnumerateOwnKeys) {
       l = unableEnumerateOwnKeys.length;
       i = -1;
-      while( ++i < l ){
-        hasOwnProperty.call(object, unableEnumerateOwnKeys[i]) && (arrkeys[ l++ ] = unableEnumerateOwnKeys[i]);
+      while (++i < l) {
+        hasOwnProperty.call(object, unableEnumerateOwnKeys[i]) && (arrkeys[l++] = unableEnumerateOwnKeys[i]);
       }
     }
-    for( key in object ){
-      hasOwnProperty.call(object, key) && (arrkeys[ l++ ] = key);
+    for (key in object) {
+      hasOwnProperty.call(object, key) && (arrkeys[l++] = key);
     }
     return arrkeys
-  };
-}
-
-var keys = Object.keys;
+  })
+}();
 
 /**
  * object deep merge
@@ -367,7 +357,6 @@ function uuid() {
 
 exports.assign = assign;
 exports.create = create;
-exports.global = global;
 exports.isArray = isArray;
 exports.isEmptyObject = isEmptyObject;
 exports.isNativeFunction = isNativeFunction;
@@ -378,6 +367,7 @@ exports.namespace = namespace;
 exports.toArray = toArray;
 exports.typeOf = typeOf;
 exports.uuid = uuid;
+exports.global = global;
 exports.isClient = isClient;
 exports.isServer = isServer;
 exports.arrayForEach = arrayForEach;

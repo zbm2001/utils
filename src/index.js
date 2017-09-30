@@ -1,6 +1,5 @@
 export {default as assign} from './assign'
 export {default as create} from './create'
-export {default as global} from './global'
 export {default as isArray} from './isArray'
 export {default as isEmptyObject} from './isEmptyObject'
 export {default as isNativeFunction} from './isNativeFunction'

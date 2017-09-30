@@ -1,4 +1,6 @@
-export const isClient = typeof window === "object" && window && window.window === window
+export const global = new Function('return this')()
+
+export const isClient = typeof window === "object" && window === global
 export const isServer = !isClient
 
 const AP = Array.prototype

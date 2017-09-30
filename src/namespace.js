@@ -1,4 +1,4 @@
-import global from './global'
+import {global} from './const'
 
 /**
  * set or get namespace
