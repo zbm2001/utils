@@ -4,7 +4,7 @@ import {global} from './const'
  * set or get namespace
  * @return {Boolean} true
  */
-export default (Object.ns = Object.namespace = function namespace (root, sNamespace, variable) {
+export default function namespace (root, sNamespace, variable) {
   // 变量判断转化
   if (typeof root === 'string') {
     variable = sNamespace
@@ -35,4 +35,4 @@ export default (Object.ns = Object.namespace = function namespace (root, sNamesp
     root = root[namespaces[i]] || (root[namespaces[i]] = {})
   }
   return (root[namespaces[l]] = variable)
-})
+}

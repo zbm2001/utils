@@ -279,7 +279,7 @@ function merge(target/*, ...args*/) {
  * set or get namespace
  * @return {Boolean} true
  */
-var namespace = (Object.ns = Object.namespace = function namespace (root, sNamespace, variable) {
+function namespace (root, sNamespace, variable) {
   // 变量判断转化
   if (typeof root === 'string') {
     variable = sNamespace;
@@ -310,7 +310,7 @@ var namespace = (Object.ns = Object.namespace = function namespace (root, sNames
     root = root[namespaces[i]] || (root[namespaces[i]] = {});
   }
   return (root[namespaces[l]] = variable)
-});
+}
 
 function toArray (object, startIndex, endIndex) {
   if (object == null) {
