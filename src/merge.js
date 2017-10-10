@@ -29,12 +29,14 @@ export default function merge(target/*, ...args*/) {
     for (let n = overrider.length, k = -1; ++k < n;) {
       deepMerge(target, overrider, k)
     }
+    return target
   }
 
   function mergeObject(target, overrider){
     for (let k in overrider) {
       deepMerge(target, overrider, k)
     }
+    return target
   }
 
   function deepMerge(target, overrider, key) {
