@@ -7,13 +7,13 @@ var global = new Function('return this')();
 var isClient = typeof window === "object" && window === global;
 var isServer = !isClient;
 
-var AP = Array.prototype;
-var OP = Object.prototype;
+var ArrayProto = Array.prototype;
+var ObjectProto = Object.prototype;
 
-var arrayForEach = AP.forEach;
-var arraySlice = AP.slice;
-var toString = OP.toString;
-var hasOwnProperty = OP.hasOwnProperty;
+var arrayForEach = ArrayProto.forEach;
+var arraySlice = ArrayProto.slice;
+var toString = ObjectProto.toString;
+var hasOwnProperty = ObjectProto.hasOwnProperty;
 
 var referenceTypes = {'object': !0, 'function': !0};
 
@@ -357,6 +357,38 @@ function uuid() {
   return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4())
 }
 
+var StringProto = String.prototype;
+var rb_spaces = /^\s+/;
+var r_spaces_e = /\s+$/;
+var r_space = /\s/;
+var r_spaces = /\s+/;
+var r_spaces_g = /\s+/g;
+var r_RNTFs_g = /[\r\n\t\f]+/g;
+
+if (!isNativeFunction(StringProto.trim)) {
+  StringProto.trim = function trim () {
+    return this.replace(rb_spaces, '').replace(r_spaces_e, '')
+  };
+  StringProto.trimLeft = function trim () {
+    return this.replace(rb_spaces, '')
+  };
+  StringProto.trimRight = function trim () {
+    return this.replace(r_spaces_e, '')
+  };
+}
+
+function trim (str) {
+  return String(str).trim()
+}
+
+function trimLeft (str) {
+  return String(str).trim()
+}
+
+function trimRight (str) {
+  return String(str).trim()
+}
+
 exports.assign = assign;
 exports.create = create;
 exports.isArray = isArray;
@@ -372,6 +404,8 @@ exports.uuid = uuid;
 exports.global = global;
 exports.isClient = isClient;
 exports.isServer = isServer;
+exports.ArrayProto = ArrayProto;
+exports.ObjectProto = ObjectProto;
 exports.arrayForEach = arrayForEach;
 exports.arraySlice = arraySlice;
 exports.toString = toString;
@@ -381,3 +415,13 @@ exports.support__proto__ = support__proto__;
 exports.noop = noop;
 exports.returnFalse = returnFalse;
 exports.returnTrue = returnTrue;
+exports.trim = trim;
+exports.trimLeft = trimLeft;
+exports.trimRight = trimRight;
+exports.StringProto = StringProto;
+exports.rb_spaces = rb_spaces;
+exports.r_spaces_e = r_spaces_e;
+exports.r_space = r_space;
+exports.r_spaces = r_spaces;
+exports.r_spaces_g = r_spaces_g;
+exports.r_RNTFs_g = r_RNTFs_g;

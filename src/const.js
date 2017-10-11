@@ -3,13 +3,13 @@ export const global = new Function('return this')()
 export const isClient = typeof window === "object" && window === global
 export const isServer = !isClient
 
-const AP = Array.prototype
-const OP = Object.prototype
+export const ArrayProto = Array.prototype
+export const ObjectProto = Object.prototype
 
-export const arrayForEach = AP.forEach
-export const arraySlice = AP.slice
-export const toString = OP.toString
-export const hasOwnProperty = OP.hasOwnProperty
+export const arrayForEach = ArrayProto.forEach
+export const arraySlice = ArrayProto.slice
+export const toString = ObjectProto.toString
+export const hasOwnProperty = ObjectProto.hasOwnProperty
 
 export const referenceTypes = {'object': !0, 'function': !0}
 
