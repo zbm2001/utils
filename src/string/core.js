@@ -30,20 +30,17 @@ if (!isNativeFunction(StringProto.repeat)) {
     return s
   }
 
-  StringProto.includes = function includes (search, start) {
+  StringProto.includes = function includes (searchString, start) {
     if (typeof start !== 'number') start = 0
 
-    if (start + search.length > this.length) {
-      return false
-    } else {
-      return this.indexOf(search, start) > -1
-    }
+    if (start + search.length > this.length) return false
+    return this.indexOf(search, start) > -1
   }
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
-   * @param searchString
-   * @param position
+   * @param {String} searchString
+   * @param {Number} position uint
    * @returns {boolean}
    */
   StringProto.startsWith = function startsWith (searchString, position){
@@ -52,24 +49,25 @@ if (!isNativeFunction(StringProto.repeat)) {
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
-   * @param searchStr
-   * @param position
+   * @param {String} searchString
+   * @param {Number} position uint
    * @returns {boolean}
    */
-  StringProto.endsWith = function endsWith (searchStr, position) {
+  StringProto.endsWith = function endsWith (searchString, position) {
+    if (searchString.length > this.length) return false
     // This works much better than >= because
     // it compensates for NaN:
     if (!(position < this.length)) position = this.length
     else position |= 0 // round position
-    return this.substr(position - searchStr.length, searchStr.length) === searchStr
+    return this.substr(position - searchString.length, searchString.length) === searchString
   }
 }
 
 if (!isNativeFunction(StringProto.padEnd)) {
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
-   * @param targetLength
-   * @param padString
+   * @param {Number} targetLength uint
+   * @param {String} padString
    * @returns {string}
    */
   StringProto.padStart = function padStart (targetLength, padString) {
@@ -86,8 +84,8 @@ if (!isNativeFunction(StringProto.padEnd)) {
 
   /**
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd
-   * @param targetLength
-   * @param padString
+   * @param {Number} targetLength uint
+   * @param {String} padString
    * @returns {string}
    */
   StringProto.padEnd = function padEnd (targetLength, padString) {
